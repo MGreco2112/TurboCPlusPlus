@@ -1,0 +1,9 @@
+#include <iostream.h>
+
+int main() {
+   int file_size = 100;
+
+   cout << file_size;
+
+   return 0;
+}
