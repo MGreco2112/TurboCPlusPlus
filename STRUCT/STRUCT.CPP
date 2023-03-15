@@ -6,17 +6,7 @@ struct User { //declare basic struct
 
 }; //terminate with semicolon, IMPORTANT!!!
 
-void createUser() { //define createUser function
-   User newUser;   // declare User struct
-
-   cout << "Enter your ID Number " << endl; //prompt user for data input
-   cin >> newUser.id;                      //assign user input to attribute
-   cout << "Enter your data number " << endl;
-   cin >> newUser.data;
-					  //print struct attributes
-   cout << "ID: " << newUser.id << ", DATA: " << newUser.data << endl;
-
-}
+void createUser(); //function declaration
 
 void main() { //declare main method
    User newUser = {1, 3.14159}; //initilize struct var with curly braces
@@ -31,5 +21,17 @@ void main() { //declare main method
       createUser();        //call createUser function
       userCount--;        //decrement conditional var after every iteration
    }
+
+}
+
+void createUser() { //function definition later in program
+   User newUser;   // declare User struct
+
+   cout << "Enter your ID Number " << endl; //prompt user for data input
+   cin >> newUser.id;                      //assign user input to attribute
+   cout << "Enter your data number " << endl;
+   cin >> newUser.data;
+					  //print struct attributes
+   cout << "ID: " << newUser.id << ", DATA: " << newUser.data << endl;
 
 }
