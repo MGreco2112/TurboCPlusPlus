@@ -1,0 +1,16 @@
+#include <iostream.h>
+
+struct User {
+   long id;
+   float data;
+
+};
+
+void main() {
+   User newUser = {1, 3.14159};
+
+   cout << newUser.id << ", " << newUser.data << endl;
+
+
+
+}
