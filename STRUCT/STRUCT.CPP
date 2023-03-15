@@ -7,7 +7,7 @@ struct User { //declare basic struct
 }; //terminate with semicolon, IMPORTANT!!!
 
 void createUser(); //function declaration
-void displayUser(User);
+void displayUser(User user);
 
 void main() { //declare main method
    User newUser = {1, 3.14159}; //initilize struct var with curly braces

@@ -38,6 +38,6 @@ void createUser() { //function definition later in program
 
 void displayUser(User user) { //define displayUser
 	      //print user attributes
-   cout << "ID: " << newUser.id << ", DATA: " << newUser.data << endl;
+   cout << "ID: " << user.id << ", DATA: " << user.data << endl;
 
 }
