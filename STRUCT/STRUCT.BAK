@@ -1,16 +1,35 @@
 #include <iostream.h>
 
-struct User {
+struct User { //declare basic struct
    long id;
-   float data;
+   double data;  //assign attributes to struct
 
-};
+}; //terminate with semicolon, IMPORTANT!!!
 
-void main() {
-   User newUser = {1, 3.14159};
+void createUser() {
+   User newUser;
 
+   cout << "Enter your ID Number " << endl;
+   cin >> newUser.id;
+   cout << "Enter your data number " << endl;
+   cin >> newUser.data;
+
+   cout << "ID: " << newUser.id << ", DATA: " << newUser.data << endl;
+
+}
+
+void main() { //declare main method
+   User newUser = {1, 3.14159}; //initilize struct var with curly braces
+				//elements entered into braces are top to bottom in struct, left to right in braces
    cout << newUser.id << ", " << newUser.data << endl;
 
+   int userCount;
+   cout << "How many users will you create? " << endl;
+   cin >> userCount;
 
+   while (userCount > 0) {
+      createUser();
+      userCount--;
+   }
 
 }

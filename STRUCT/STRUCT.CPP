@@ -2,15 +2,34 @@
 
 struct User { //declare basic struct
    long id;
-   float data;  //assign attributes to struct
+   double data;  //assign attributes to struct
 
 }; //terminate with semicolon, IMPORTANT!!!
+
+void createUser() { //define createUser function
+   User newUser;   // declare User struct
+
+   cout << "Enter your ID Number " << endl; //prompt user for data input
+   cin >> newUser.id;                      //assign user input to attribute
+   cout << "Enter your data number " << endl;
+   cin >> newUser.data;
+					  //print struct attributes
+   cout << "ID: " << newUser.id << ", DATA: " << newUser.data << endl;
+
+}
 
 void main() { //declare main method
    User newUser = {1, 3.14159}; //initilize struct var with curly braces
 				//elements entered into braces are top to bottom in struct, left to right in braces
    cout << newUser.id << ", " << newUser.data << endl;
 
+   int userCount;             //declare int var for while condition
+   cout << "How many users will you create? " << endl; //prompt user for input
+   cin >> userCount; //assign user input to while condition var
 
+   while (userCount > 0) {  //while loop based on status of userCount
+      createUser();        //call createUser function
+      userCount--;        //decrement conditional var after every iteration
+   }
 
 }
