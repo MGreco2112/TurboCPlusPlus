@@ -1,0 +1,13 @@
+#include <iostream.h>
+#include <iomanip.h>
+
+void main() {
+   float test = 15.5; //goal: format this as a currency, two decimal places
+
+   cout << test << endl;     //basic, unformatted output
+
+   cout << setiosflags(ios::fixed)
+	<< setiosflags(ios::showpoint)
+	<< setprecision(2)
+	<< test << endl;
+}
