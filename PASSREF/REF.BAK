@@ -1,0 +1,27 @@
+//demonstrates passing args by reference
+#include <iostream.h>
+
+void main() {
+   void intfrac(float, float&, float&); //funct declaration
+   float number, intpart, fracpart;
+
+   do {                                         //enter do section
+     cout << "\nEnter a real number: ";         //prompt user
+     cin >> number;                             //take input to number
+     intfrac(number, intpart, fracpart);        //call declared function
+     cout << "Integer part is " << intpart      //output results
+	  << ", fraction part is " << fracpart;
+
+   } while (number != 0);                       //establish exit condition
+
+}
+
+void intfrac(float n, float& intp, float& fracp) { //define function
+			   //'&' after data types indicate passing by reference
+
+   intp = float(long(n));  //assignment to referenced args
+   fracp = n - intp;       //these vals are passed to the referenced vals
+			   //outside the function, without the need to return
+
+
+}
