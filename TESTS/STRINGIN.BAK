@@ -1,0 +1,17 @@
+#include <iostream.h>
+#include <iomanip.h>
+#include <stdlib.h>
+
+void main() {
+   const int MAX = 10;
+   char string[MAX];
+
+   system("CLS");
+
+   cout << "Enter your name: ";
+   cin >> setw(MAX) >> string;
+
+   cout << endl << "Your name is " << string;
+
+
+}
