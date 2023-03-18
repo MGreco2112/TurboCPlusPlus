@@ -2,12 +2,17 @@
 #include <stdlib.h>
 
 class Employee {  /*declare user created Class*/
- private:         /*declare access modifier for fields (private by default)*/
+ protected:         /*declare access modifier for fields (protected for inheritance)*/
    char *Name;
    char *Company;
    int Age;
 
  public:          /*change access level for methods (optional)*/
+   Employee() {
+     Name = "Default";
+     Company = "Default";
+     Age = 0;
+   }
    Employee(char *name, char *company, int age) { /*constructor method*/
      Name = name;
      Company = company;
@@ -39,14 +44,35 @@ class Employee {  /*declare user created Class*/
    }
 };
 
+class Engineer : public Employee {
+   public:
+     Engineer(char *name, char * company, int age) {
+	Name = name;
+	Company = company;
+	Age = age;
+	cout << "Engineer constructor HIT" << endl;
+     }
+     void getPosition() {
+	cout << Name << " is an Engineer." << endl;
+     }
+
+
+};
+
 int main() {
+  system("CLS");
   /*instantiate object within main function*/
   Employee employee1 = Employee("Mads", "Dreaded 9th", 27);
 
+  Engineer engineer1 = Engineer("Alex", "Dreaded 9th", 28);
+
+  //engineer1.setName("Alex");
+  //engineer1.setCompany("Dreaded 9th");
+  //engineer1.setAge(28);
 
   employee1.IntroduceYourself(); /*call method from instant. object*/
-  employee1.setName("Alex"); /*call setter method, include new value*/
-  cout << employee1.getName(); /*print updated value thru getter method*/
+  engineer1.IntroduceYourself();
+  engineer1.getPosition(); //call method from derived class
 
   return 0;
 }
