@@ -46,11 +46,7 @@ class Employee {  /*declare user created Class*/
 
 class Engineer : public Employee {
    public:
-     Engineer(char *name, char * company, int age) {
-	Name = name;
-	Company = company;
-	Age = age;
-	cout << "Engineer constructor HIT" << endl;
+     Engineer(char *name, char *company, int age) : Employee(name, company, age) {
      }
      void getPosition() {
 	cout << Name << " is an Engineer." << endl;
