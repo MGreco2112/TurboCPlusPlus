@@ -13,14 +13,15 @@ class Box { //define Box class
     char str[LEN];
 
   public: //public methods for constructor and erasing
-    Box(int left, int right, int top, int bottom, char str[]) {
-       this.left = left;  //assign args to fields of class instance
-       this.right = right;
-       this.top = top;
-       this.bottom = bottom;
-       strcpy(this.str, str); //copy passed in char arr to field with strcpy
-       window(this.left, this.top, this.right, this.bottom); //set window with passed in dimensions
-       cputs(this.str); //display text within window
+    Box(int l, int r, int t, int b, char s[]) {
+       left = l;  //assign args to fields of class instance
+       right = r;
+       top = t;
+       bottom = b;
+       strcpy(str, s); //copy passed in char arr to field with strcpy
+       window(left, top, right, bottom); //set window with passed in dimensions
+       cputs(str); //display text within window created
+		  // cputs works as cout but to created window, not to console
     }
 
     void erase() {
@@ -37,6 +38,7 @@ or on fire, or the CPU\n\r\
 is flooded. Correct the\n\r\
 situation and try again.\n\r\
 Press Enter to continue: ";  //set string literal to char arr s1
+	  //cputs does not recognize \n as terminal does, needing \n\r used together to get the desired result
 
   char s2[] = "This is a string that will wrap at the right \
 edge of the window, probably breaking words innappropriately \
