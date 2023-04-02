@@ -7,19 +7,33 @@ const int RAD = 75; //radius of ball
 
 class Ball {
   private:
-    int xCo; //coordinates of center
+    int xCo; //coordinates of center of circle
     int yCo;
+    int lineColor; //line and fill color values
+    int fillColor;
   public:
-    Ball() { //default constructor sets x and y to 0
+    Ball() { //default constructor sets x and y to 0, line and fill color to WHITE
        xCo = 0;
        yCo = 0;
+       lineColor = WHITE;
+       fillColor = WHITE;
     }
-    void set(int x, int y) { //set method assigns given x/y to fields
+    void set(int x, int y, int lc, int fc) { //set method assigns given x/y to fields
+       //added int values for line color and fill color to constructor
        xCo = x;
        yCo = y;
+       lineColor = lc;
+       fillColor = fc;
     }
-    void draw() { //initializes circle object with x/y and radius elements
-       circle(xCo, yCo, RAD);
+    void draw(int fillStyle=SOLID_FILL) { //initializes circle object with x/y and radius elements
+       //added int fillStyle param with default value of SOLID_FILL
+
+       setcolor(lineColor); //set color function with lineColor as arg
+       setlinestyle(SOLID_LINE, 0, THICK_WIDTH); //setlinestyle for circle
+       circle(xCo, yCo, RAD); //instantiate circle as before
+       setfillstyle(fillStyle, fillColor); //set fill color with style and color
+       floodfill(xCo, yCo, lineColor); //flood from center of circle with color
+       //Floodfill runs until it encounters a boarder color, in this instance the color of the line
     }
 };
 
@@ -38,13 +52,15 @@ void main() {
    Ball b2;
    Ball b3;
 
-   b1.set(320, 150);  //set ball object center locations to x/y coordinates
-   b2.set(255, 150);
-   b3.set(385, 150);
+   b1.set(100, 150, YELLOW, RED);  //set coordinates and line/fill colors
+   b2.set(200, 150, YELLOW, GREEN);
+   b3.set(300, 150, YELLOW, BLUE);
 
    b1.draw(); //draw the three balls on the screen
-   b2.draw();
-   b3.draw();
+   b2.draw(SLASH_FILL); //draw with slash fill argument
+   b3.draw(BKSLASH_FILL); //draw with NW-SE heavy lines
+
+
 
    getch(); //await keyboard input
    closegraph(); //end graphics mode
