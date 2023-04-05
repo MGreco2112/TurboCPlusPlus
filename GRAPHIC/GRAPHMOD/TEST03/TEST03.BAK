@@ -25,10 +25,10 @@ class Shape { //define Shape class
 	fillColor = fc;
      }
 
-     void draw() { //basic draw method: sets color, line style, and fill style
+     void draw(int lw = THICK_WIDTH, int fs = SOLID_FILL) { //basic draw method: sets color, line style, and fill style
 	setcolor(lineColor);
-	setlinestyle(SOLID_LINE, 0, THICK_WIDTH);
-	setfillstyle(SOLID_FILL, fillColor);
+	setlinestyle(SOLID_LINE, 0, lw);
+	setfillstyle(fs, fillColor);
      }
 
 };
@@ -41,8 +41,8 @@ class Ball : public Shape { //Ball inherits from Shape
 	 Shape::set(x, y, lc, fc); //calls set method from Shape using ::
      }
 
-     void draw() { //draw method
-	Shape::draw(); //calls Shape's Draw, sets colors accordingly
+     void draw(int lw = THICK_WIDTH, int fs = SOLID_FILL) { //draw method
+	Shape::draw(lw, fs); //calls Shape's Draw, sets colors accordingly
 	circle(xCo, yCo, W); //instantiates Circle obj from given args
 	floodfill(xCo, yCo, lineColor); //fills coordiantes with set fill
      }
@@ -57,12 +57,12 @@ class Rect : public Shape { //Rect class inherits from Shape
 	 Shape::set(x, y, lc, fc); //calls Shape's set method
       }
 
-      void draw() { //draw method
-	 Shape::draw(); //calls Shape's draw method
+      void draw(int lw = THICK_WIDTH, int fs = SOLID_FILL) { //draw method
+	 Shape::draw(lw, fs); //calls Shape's draw method
 	 //instantiates rectangle object at given points
 	 rectangle(xCo - W, yCo - W, xCo + W, yCo + W);
 	 floodfill(xCo, yCo, lineColor); //fill from these points to linecolor
-	 moveto(xCo - W, yCo + W); //TODO fill out comment
+	 moveto(xCo - W, yCo + W); //draw diagonal line through rect
 	 lineto(xCo + W, yCo - W);
       }
 };
@@ -75,12 +75,12 @@ class Tria : public Shape { //Tria inherits from Shape
 	 Shape::set(x, y, lc, fc); //calls Shape's set method
      }
 
-     void draw() { //draw method
+     void draw(int lw = THICK_WIDTH, int fs = SOLID_FILL) { //draw method
 	 int triArray[] = { xCo,   yCo-W,
 			  xCo+W, yCo+W,
 			  xCo-W, yCo+W };
 //above is an array that holds the points that define the polygon
-	 Shape::draw(); //call's Shape's draw method
+	 Shape::draw(lw, fs); //call's Shape's draw method
 	 fillpoly(3, triArray);
 	 //fillpoly takes the number of points of the shape and the address
 	 //of the array. This function draws a line from the first point
@@ -107,9 +107,9 @@ void main() {
    r2.set(250, 150, YELLOW, GREEN);
    t3.set(420, 150, YELLOW, BLUE);
 
-   b1.draw();  //draw shapes
-   r2.draw();
-   t3.draw();
+   b1.draw();  //draw shapes, no args gives default line width and fill pattern
+   r2.draw(0, 7);
+   t3.draw(3, 2);
 
    getch();  //await input
    closegraph(); //close graphics mode
