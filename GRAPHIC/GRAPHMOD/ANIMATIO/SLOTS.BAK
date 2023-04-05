@@ -1,0 +1,241 @@
+//slot machine demo for movement and sound
+#include <graphics.h> //graphics header
+#include <stdlib.h> //stdlib for random
+#include <time.h> //randomize
+#include <conio.h> //getch
+#include <dos.h> //delay, sound, no sound
+
+const int W = 15;
+const int MAR = 10;
+
+class Shape { //define Shape class
+  protected:  //protected fields
+     int xCo; //x and y coordinates stored as int
+     int yCo;
+     int lineColor; //line and fill color for shape
+     int fillColor;
+  public:     //public methods
+     Shape() {  //no args constructor
+	xCo = 0;
+	yCo = 0;
+	lineColor = WHITE;
+	fillColor = WHITE;
+     }
+
+     void set(int x, int y, int lc, int fc) { //assign input values to fields
+	xCo = x;
+	yCo = y;
+	lineColor = lc;
+	fillColor = fc;
+     }
+
+     void draw(int lw = THICK_WIDTH, int fs = SOLID_FILL) { //basic draw method: sets color, line style, and fill style
+	setcolor(lineColor);
+	setlinestyle(SOLID_LINE, 0, lw);
+	setfillstyle(fs, fillColor);
+     }
+
+};
+
+class Ball : public Shape { //Ball inherits from Shape
+  public:
+     Ball() : Shape() {} //default constuctor utilizes Shape constuctor
+
+     void set(int x, int y, int lc, int fc) {  //set method
+	 Shape::set(x, y, lc, fc); //calls set method from Shape using ::
+     }
+
+     void draw(int lw = THICK_WIDTH, int fs = SOLID_FILL) { //draw method
+	Shape::draw(lw, fs); //calls Shape's Draw, sets colors accordingly
+	circle(xCo, yCo, W); //instantiates Circle obj from given args
+	floodfill(xCo, yCo, lineColor); //fills coordiantes with set fill
+     }
+
+};
+
+class Rect : public Shape { //Rect class inherits from Shape
+   public:
+      Rect() : Shape() {} //utilizes Shape def const as default constructor
+
+      void set(int x, int y, int lc, int fc) { //set method
+	 Shape::set(x, y, lc, fc); //calls Shape's set method
+      }
+
+      void draw(int lw = THICK_WIDTH, int fs = SOLID_FILL) { //draw method
+	 Shape::draw(lw, fs); //calls Shape's draw method
+	 //instantiates rectangle object at given points
+	 rectangle(xCo - W, yCo - W, xCo + W, yCo + W);
+	 floodfill(xCo, yCo, lineColor); //fill from these points to linecolor
+	 moveto(xCo - W, yCo + W); //draw diagonal line through rect
+	 lineto(xCo + W, yCo - W);
+      }
+};
+
+class Tria : public Shape { //Tria inherits from Shape
+  public:
+     Tria() : Shape() {} //utilizes Shape's default constructor
+
+     void set(int x, int y, int lc, int fc) { //set method
+	 Shape::set(x, y, lc, fc); //calls Shape's set method
+     }
+
+     void draw(int lw = THICK_WIDTH, int fs = SOLID_FILL) { //draw method
+	 int triArray[] = { xCo,   yCo-W,
+			  xCo+W, yCo+W,
+			  xCo-W, yCo+W };
+//above is an array that holds the points that define the polygon
+	 Shape::draw(lw, fs); //call's Shape's draw method
+	 fillpoly(3, triArray);
+	 //fillpoly takes the number of points of the shape and the address
+	 //of the array. This function draws a line from the first point
+	 //to the second, then the second to the third, and so on.
+	 //it closes last point to first point automatically
+
+	 //the drawpoly() graphics function can be used without filling it
+     }
+};
+
+class NoShape : public Shape {
+  public:
+     void erase() {
+	int border[] =
+	   { xCo-W-MAR, yCo-W-MAR,
+	     xCo+W+MAR, yCo-W-MAR,
+	     xCo+W+MAR, yCo+W+MAR,
+	     xCo-W-MAR, yCo+W+MAR };
+
+	setfillstyle(SOLID_FILL, DARKGRAY);
+	fillpoly(4, border);
+     }
+};
+
+class Cherry : public Ball, public NoShape {
+  public:
+     Cherry() : Ball() {}
+
+     void set(int x, int y) {
+	Ball::set(x, y, WHITE, RED);
+	NoShape::set(x, y, WHITE, RED);
+     }
+
+     void draw() {
+	erase();
+	Ball::draw();
+     }
+};
+
+class Grape : public Ball, public NoShape {
+   public:
+     Grape() : Ball() {}
+
+     void set(int x, int y) {
+	Ball::set(x, y, WHITE, BLUE);
+	NoShape::set(x, y, WHITE, BLUE);
+     }
+
+     void draw() {
+	erase();
+	Ball::draw();
+     }
+};
+
+class Square : public Rect, public NoShape {
+  public:
+     Square() : Rect() {}
+
+     void set(int x, int y) {
+	Rect::set(x, y, WHITE, CYAN);
+	NoShape::set(x, y, WHITE, CYAN);
+     }
+
+     void draw() {
+	erase();
+	Rect::draw();
+     }
+
+};
+
+class Pyramid : public Tria, public NoShape {
+  public:
+     Pyramid() : Tria() {}
+
+     void set(int x, int y) {
+	Tria::set(x, y, WHITE, CYAN);
+	NoShape::set(x, y, WHITE, CYAN);
+     }
+
+     void draw() {
+	erase();
+	Tria::draw();
+     }
+};
+
+class Wheel : public Shape {
+  private:
+     Cherry ch;
+     Grape gr;
+     Square sq;
+     Pyramid py;
+
+  public:
+     Wheel() {
+	xCo = 0;
+	yCo = 0;
+     }
+
+     void set(int x, int y) {
+	xCo = x;
+	yCo = y;
+	ch.set(xCo, yCo);
+	gr.set(xCo, yCo);
+	sq.set(xCo, yCo);
+	py.set(xCo, yCo);
+     }
+
+     void draw();
+};
+
+void Wheel::draw() {
+	setcolor(WHITE);
+	rectangle(xCo-W-MAR, yCo-W-MAR, xCo+W+MAR, yCo+W+MAR);
+
+	switch(random(4)) {
+	   case 0 : ch.draw(); break;
+	   case 1 : gr.draw(); break;
+	   case 2 : sq.draw(); break;
+	   case 3 : py.draw(); break;
+	}
+}
+
+void main() {
+  const int NUMBER = 60;
+  int driver;
+  int mode;
+
+  driver = DETECT;
+
+  initgraph(&driver, &mode, "\\tcpp\\bgi");
+  randomize();
+
+  Wheel w1;
+  Wheel w2;
+  Wheel w3;
+
+  w1.set(100, 100);
+  w2.set(160, 100);
+  w3.set(220, 100);
+
+  for (int i = 0; i < NUMBER; i++) {
+     w1.draw();
+     w2.draw();
+     w3.draw();
+     sound(100); delay(20); nosound();
+     delay( i*i/20 );
+  }
+
+  sound(400); delay(400);
+  sound(500); delay(800); nosound();
+  getch();
+  closegraph();
+
+}
