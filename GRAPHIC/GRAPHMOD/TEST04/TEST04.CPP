@@ -1,0 +1,130 @@
+//text in graphics mode
+//utilizing a graphics string class
+
+#include <graphics.h>
+#include <conio.h>
+#include <string.h>
+
+class Gstring {
+  protected:
+     char str[80];
+     int xCo, yCo;
+     int font;
+     int direction;
+     int size;
+     int color;
+     int horzJustify;
+     int vertJustify;
+     int multx, divx;
+     int multy, divy;
+  public:
+     Gstring() {
+	str[0] = '\0';
+	xCo = 0; yCo = 0;
+	font = DEFAULT_FONT;
+	direction = HORIZ_DIR;
+	size = 4;
+	color = WHITE;
+	horzJustify = LEFT_TEXT;
+	vertJustify = TOP_TEXT;
+	multx = 1; divx = 1;
+	multy = 1; divy = 1;
+     }
+
+     void DrawText() {
+	moveto(xCo, yCo);
+	settextstyle(font, direction, size);
+	setcolor(color);
+	settextjustify(horzJustify, vertJustify);
+	setusercharsize(multx, divx, multy, divy);
+	outtext(str);
+     }
+
+     void SetText(char s[]) {
+	strcpy(str, s);
+     }
+
+     void SetPosition(int x, int y) {
+	xCo = x; yCo = y;
+     }
+
+     void SetFont(int f) {
+	font = f;
+     }
+
+     void SetDirection(int d) {
+	direction = d;
+     }
+
+     void SetSize(int s) {
+	size = s;
+     }
+
+     void SetColor(int c) {
+	color = c;
+     }
+
+     void SetHJust(int hj) {
+	horzJustify = hj;
+     }
+
+     void SetVJust(int vj) {
+	vertJustify = vj;
+     }
+
+     void SetHorzSize(int m, int d) {
+	size = 0; multx = m; divx = d;
+     }
+
+     void SetVertSize(int m, int d) {
+	size = 0; multy = m; divy = d;
+     }
+};
+
+void main() {
+   int driver, mode;
+
+   driver = DETECT;
+
+   initgraph(&driver, &mode, "\\tcpp\\bgi");
+
+   Gstring s1, s2, s3, s4, s5, s6;
+
+   s1.SetText("Default Everything");
+
+   s2.SetText("Gothic Font");
+   s2.SetFont(GOTHIC_FONT);
+   s2.SetPosition(0, 75);
+
+   s3.SetText("Vertical Sans Serif");
+   s3.SetFont(SANS_SERIF_FONT);
+   s3.SetPosition(600, 0);
+   s3.SetDirection(VERT_DIR);
+
+   s4.SetText("Centered Triplex");
+   s4.SetFont(TRIPLEX_FONT);
+   s4.SetPosition(300, 150);
+   s4.SetHJust(CENTER_TEXT);
+
+   s5.SetText("Centered Sans Serif");
+   s5.SetFont(SANS_SERIF_FONT);
+   s5.SetSize(6);
+   s5.SetPosition(300, 225);
+   s5.SetHJust(CENTER_TEXT);
+
+   s6.SetText("Tall and narrow Triplex");
+   s6.SetFont(TRIPLEX_FONT);
+   s6.SetPosition(0, 300);
+   s6.SetHorzSize(2, 3);
+   s6.SetVertSize(4, 1);
+
+   s1.DrawText();
+   s2.DrawText();
+   s3.DrawText();
+   s4.DrawText();
+   s5.DrawText();
+   s6.DrawText();
+
+   getch();
+   closegraph();
+}
