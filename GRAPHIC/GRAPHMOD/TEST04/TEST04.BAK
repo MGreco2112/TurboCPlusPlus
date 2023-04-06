@@ -1,43 +1,43 @@
 //text in graphics mode
 //utilizing a graphics string class
 
-#include <graphics.h>
-#include <conio.h>
-#include <string.h>
+#include <graphics.h> //import graphics
+#include <conio.h>    //import console io for getch
+#include <string.h>   //import string for strcpy
 
-class Gstring {
+class Gstring { //define Graphics String class
   protected:
-     char str[80];
-     int xCo, yCo;
-     int font;
-     int direction;
-     int size;
-     int color;
-     int horzJustify;
-     int vertJustify;
-     int multx, divx;
-     int multy, divy;
+     char str[80];   //string var with max len of 80
+     int xCo, yCo;   //x and y coordinates
+     int font;       //font value
+     int direction;  //direction value
+     int size;       //size value
+     int color;      //color value
+     int horzJustify;   //horizontal justification
+     int vertJustify;   //vertical justification
+     int multx, divx;   //horz scale factors
+     int multy, divy;   //vert scale factors
   public:
-     Gstring() {
-	str[0] = '\0';
-	xCo = 0; yCo = 0;
-	font = DEFAULT_FONT;
-	direction = HORIZ_DIR;
-	size = 4;
-	color = WHITE;
-	horzJustify = LEFT_TEXT;
-	vertJustify = TOP_TEXT;
-	multx = 1; divx = 1;
-	multy = 1; divy = 1;
+     Gstring() {                      //default constructor
+	str[0] = '\0';                //initialize str[0] with empty string
+	xCo = 0; yCo = 0;             //default coordinates
+	font = DEFAULT_FONT;          //default font
+	direction = HORIZ_DIR;        //horizontal direction by default
+	size = 4;                     //default size of four
+	color = WHITE;                //default color of WHITE
+	horzJustify = LEFT_TEXT;      //horizontal positioning
+	vertJustify = TOP_TEXT;       //vertical positioning
+	multx = 1; divx = 1;          //horizontal scale factors
+	multy = 1; divy = 1;          //vertical scale factors
      }
 
-     void DrawText() {
-	moveto(xCo, yCo);
-	settextstyle(font, direction, size);
-	setcolor(color);
-	settextjustify(horzJustify, vertJustify);
-	setusercharsize(multx, divx, multy, divy);
-	outtext(str);
+     void DrawText() {                            //draw text method
+	moveto(xCo, yCo);                         //move insertion to x, y
+	settextstyle(font, direction, size);      //set style of font, direction, and size
+	setcolor(color);                          //set color
+	settextjustify(horzJustify, vertJustify); //set horz and vert
+	setusercharsize(multx, divx, multy, divy);//alter text independently by height and/or width
+	outtext(str);                             //display str
      }
 
      void SetText(char s[]) {
@@ -82,49 +82,55 @@ class Gstring {
 };
 
 void main() {
-   int driver, mode;
+   int driver, mode;                        //basic graphics mode setup
 
    driver = DETECT;
 
    initgraph(&driver, &mode, "\\tcpp\\bgi");
 
-   Gstring s1, s2, s3, s4, s5, s6;
+   Gstring s1, s2, s3, s4, s5, s6;   //declare siz Gstring objects
 
-   s1.SetText("Default Everything");
+   s1.SetText("Default Everything"); //set text
+   s1.SetPosition(0,480);
 
-   s2.SetText("Gothic Font");
+   s2.SetText("Gothic Font");       //set text, font type, and positon
    s2.SetFont(GOTHIC_FONT);
+   s2.SetColor(DARKGRAY);
    s2.SetPosition(0, 75);
 
-   s3.SetText("Vertical Sans Serif");
+   s3.SetText("Vertical Sans Serif"); //set textm font, position, direction
    s3.SetFont(SANS_SERIF_FONT);
    s3.SetPosition(600, 0);
+   s3.SetColor(BLUE);
    s3.SetDirection(VERT_DIR);
 
-   s4.SetText("Centered Triplex");
+   s4.SetText("Centered Triplex");  //set text, font, position, HJustification
    s4.SetFont(TRIPLEX_FONT);
+   s4.SetColor(MAGENTA);
    s4.SetPosition(300, 150);
    s4.SetHJust(CENTER_TEXT);
 
-   s5.SetText("Centered Sans Serif");
+   s5.SetText("Centered Sans Serif"); //set text, font size, position, hjust
    s5.SetFont(SANS_SERIF_FONT);
    s5.SetSize(6);
+   s5.SetColor(LIGHTGREEN);
    s5.SetPosition(300, 225);
-   s5.SetHJust(CENTERED_TEXT);
+   s5.SetHJust(CENTER_TEXT);
 
-   s6.SetText("Tall and narrow Triplex");
+   s6.SetText("Tall and narrow Triplex"); //set text font, pos, h & v sizes
    s6.SetFont(TRIPLEX_FONT);
    s6.SetPosition(0, 300);
+   s6.SetColor(BROWN);
    s6.SetHorzSize(2, 3);
    s6.SetVertSize(4, 1);
 
-   s1.DrawText();
+   s1.DrawText();  //draw all Gstring objects
    s2.DrawText();
    s3.DrawText();
    s4.DrawText();
    s5.DrawText();
    s6.DrawText();
 
-   getch();
-   closegraph();
+   getch();        //wait for user interaction
+   closegraph();   //close graphics mode
 }
