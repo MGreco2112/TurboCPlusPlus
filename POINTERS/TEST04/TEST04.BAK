@@ -1,0 +1,13 @@
+//performing operations on variable values using pointers
+#include <iostream.h> //for cout function
+
+void main() {
+   int var1, var2;
+   int* ptr;
+
+   ptr = &var1;
+   *ptr = 37;
+   var2 = *ptr;
+
+   cout << var2 << endl;
+}
