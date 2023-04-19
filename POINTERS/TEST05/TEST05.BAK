@@ -1,0 +1,19 @@
+//void pointer demo
+#include <iostream.h>
+
+void main() {
+   int intVar;
+   float floatVar;
+
+   int* ptrInt;
+   float* ptrFlt;
+   void* ptrVoid;
+
+   ptrInt = &intVar;
+   ptrFlt = &floatVar;
+
+   ptrVoid = &intVar;
+   cout << ptrVoid << endl;
+   ptrVoid = &floatVar;
+   cout << ptrVoid << endl;
+}
